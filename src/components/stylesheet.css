@@ -1,0 +1,62 @@
+html {
+  background-image: url('./images/playstation-bg.jpeg');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 1350px;
+  font-family: 'Play', sans-serif;
+  font-size: larger;
+  color: white;
+}
+
+.logo {
+  bottom: 130px;
+  left: 350px;
+  height: 60px;
+  width: 70px;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+.hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.main-header {
+  font-size: 40px;
+  vertical-align: middle;
+  padding: 20px;
+}
+
+.menu-button {
+  padding-left: 40px;
+}
+
+.menu {
+  width: 200px;
+  float: left;
+}
+
+.main-box {
+  float: right;
+  width: 820px;
+  height: 520px;
+  position: relative;
+  border-left: thin solid white;
+}
+
+.game-list {
+  list-style: none;
+}
+
+input {
+  width: 200px;
+  display: block;
+  box-sizing: border-box;
+}
+
+.vertical-line {
+  border-left: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  ;
+}

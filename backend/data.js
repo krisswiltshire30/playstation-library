@@ -3,15 +3,14 @@ const Schema = mongoose.Schema;
 
 const DataSchema = new Schema(
   {
+    id: Number,
     name: String,
     platform: String,
     genre: String,
     release_date: Date,
-    player_count: Number,
+    players: Number,
     publisher: String,
-    box_art_url: String,
-  },
-  { timestamps: true }
+  }
 );
 
 module.exports = mongoose.model("Data", DataSchema);

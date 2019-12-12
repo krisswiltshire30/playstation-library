@@ -11,7 +11,7 @@ app.use(cors());
 const router = express.Router();
 
 const dbRoute =
-  'mongodb+srv://krisswiltshire:<password>@mongo-test-rxsz9.mongodb.net/test?retryWrites=true&w=majority';
+  'mongodb+srv://test-user:JUQSjUXigU6Kvnc1@mongo-test-rxsz9.mongodb.net/test?retryWrites=true&w=majority';
 
 mongoose.connect(dbRoute, {
   useNewUrlParser: true
@@ -75,17 +75,28 @@ router.post('/putData', (req, res) => {
 
   const {
     id,
-    message
+    name,
+    platform,
+    genre,
+    release_date,
+    players,
+    publisher,
   } = req.body;
 
-  if ((!id && id !== 0) || !message) {
+  if ((!id && id !== 0) || !name) {
     return res.json({
       success: false,
       error: 'INVALID INPUTS',
     });
   }
-  data.message = message;
   data.id = id;
+  data.name = name;
+  data.platform = platform;
+  data.genre = genre;
+  data.release_date = release_date;
+  data.players = players;
+  data.publisher = publisher;
+  
   data.save((err) => {
     if (err) return res.json({
       success: false,
