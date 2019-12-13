@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Popup from "reactjs-popup";
 import './components/stylesheet.css';
 
 class App extends Component {
@@ -66,63 +67,80 @@ class App extends Component {
         </div>
         <hr />
         <div className='menu'>
-          <h4 className='menu-button'>My Games</h4>
-          <h4 className='menu-button'>Add Game</h4>
+          <Popup
+            trigger={<button className="menu-button"> Add Game </button>}
+            modal
+            closeOnDocumentClick>
+            <center>
+              <div>
+                <p>Add a game to your library</p>
+                <input
+                  type="text"
+                  onChange={(e) => this.setState({ name: e.target.value })}
+                  placeholder="Name"
+                />
+                <input
+                  type="text"
+                  onChange={(e) => this.setState({ platform: e.target.value })}
+                  placeholder="Platform"
+                />
+                <input
+                  type="text"
+                  onChange={(e) => this.setState({ genre: e.target.value })}
+                  placeholder="Genre"
+                />
+                <input
+                  type="text"
+                  onChange={(e) => this.setState({ release_date: e.target.value })}
+                  placeholder="Release Date - dd/mm/yyyy"
+                />
+                <input
+                  type="text"
+                  onChange={(e) => this.setState({ players: e.target.value })}
+                  placeholder="Players"
+                />
+                <input
+                  type="text"
+                  onChange={(e) => this.setState({ publisher: e.target.value })}
+                  placeholder="Publisher"
+                />
+                <button style={{ width: '200px' }}
+                  onClick={() => this.putDataToDB(this.state.name,
+                    this.state.platform,
+                    this.state.genre,
+                    this.state.release_date,
+                    this.state.players,
+                    this.state.publisher,
+                  )}>ADD
+            </button>
+              </div>
+            </center>
+          </Popup>
         </div>
-        <div className='main-box'>
+        <div className='main-box main-box-balance'>
           <ul className="game-list">
             {data.length <= 0
               ? 'Empty'
               : data.map((dat) => (
-                <li style={{ padding: '10px' }} key={data.id}>
-                  <span> {dat.name} </span>
+                <li key={data.id}>
+                  <Popup
+                    trigger={<button className="list-button"> {dat.name} </button>}
+                    modal
+                    closeOnDocumentClick>
+                    <div className='popup-info'>
+                      <span>Name: {dat.name}</span><br />
+                      <span>Platform: {dat.platform}</span><br />
+                      <span>Genre: {dat.genre}</span><br />
+                      <span>Release Date: {dat.release_date}</span><br />
+                      <span>No. of Players: {dat.players}</span><br />
+                      <span>Publisher: {dat.publisher}</span><br />
+                    </div>
+                  </Popup>
                 </li>
               ))}
           </ul>
-          <div>
-            <p>Add a game to your library</p>
-            <input
-              type="text"
-              onChange={(e) => this.setState({ name: e.target.value })}
-              placeholder="Name"
-            />
-            <input
-              type="text"
-              onChange={(e) => this.setState({ platform: e.target.value })}
-              placeholder="Platform"
-            />
-            <input
-              type="text"
-              onChange={(e) => this.setState({ genre: e.target.value })}
-              placeholder="Genre"
-            />
-            <input
-              type="text"
-              onChange={(e) => this.setState({ release_date: e.target.value })}
-              placeholder="Release Date - dd/mm/yyyy"
-            />
-            <input
-              type="text"
-              onChange={(e) => this.setState({ players: e.target.value })}
-              placeholder="Players"
-            />
-            <input
-              type="text"
-              onChange={(e) => this.setState({ publisher: e.target.value })}
-              placeholder="Publisher"
-            />
-            <button style={{ width: '200px' }}
-              onClick={() => this.putDataToDB(this.state.name, 
-                                              this.state.platform, 
-                                              this.state.genre, 
-                                              this.state.release_date,
-                                              this.state.players,
-                                              this.state.publisher,
-                                              )}>ADD
-            </button>
-          </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

@@ -7,7 +7,7 @@ const DataSchema = new Schema(
     name: String,
     platform: String,
     genre: String,
-    release_date: Date,
+    release_date: String,
     players: Number,
     publisher: String,
   }

@@ -30,7 +30,19 @@ html {
 }
 
 .menu-button {
-  padding-left: 40px;
+  padding-left: 45px;
+  font-family: 'Play', sans-serif;
+  font-size: larger;
+  color: white;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.menu-button:hover {
+  color: rgb(187, 179, 179);
 }
 
 .menu {
@@ -40,10 +52,20 @@ html {
 
 .main-box {
   float: right;
-  width: 820px;
+  width: 1050px;
   height: 520px;
   position: relative;
   border-left: thin solid white;
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
+}
+
+.main-box-balance {
+  -webkit-column-fill: auto;
+  -moz-column-fill: auto;
+  column-fill: auto;
+  margin-bottom: 1em;
 }
 
 .game-list {
@@ -56,7 +78,45 @@ input {
   box-sizing: border-box;
 }
 
-.vertical-line {
-  border-left: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-  ;
+.form {
+  position: center;
+}
+
+li {
+  margin: 0%;
+  height: 20px;
+  font-size: 25px;
+  cursor: pointer;
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.list-button {
+  font-family: 'Play', sans-serif;
+  font-size: 25px;
+  color: white;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.list-button:hover {
+  color: rgb(187, 179, 179);
+}
+
+.popup-info {
+  color: black;
+  font-size: 15px;
+  float: right;
+}
+
+p {
+  color: black;
+}
+
+span {
+  margin: 0%;
+  padding: px;
 }
