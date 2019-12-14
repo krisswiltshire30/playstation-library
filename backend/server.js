@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const express = require('express');
-var cors = require('cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
-
+const multer = require('multer');
+const path = require('path');
 const API_PORT = 3001;
 const app = express();
 app.use(cors());
@@ -17,6 +18,23 @@ mongoose.connect(dbRoute, {
   useNewUrlParser: true
 });
 
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, callback) => {
+      try {
+        let path = "http://localhost:3001/";
+        fs.mkdirsSync(path);
+        callback(null, path);
+      } catch (e) {
+        callback(jsonError(e), null)
+      }
+    },
+    filename: (req, file, callback) => {
+      //original name is the uploaded file's name with ext
+      callback(null, mongoose.Types.ObjectId() + path.extname(file.originalname));
+    }
+  })
+});
 let db = mongoose.connection;
 
 db.once('open', () => console.log('connected to the database'));
@@ -81,6 +99,7 @@ router.post('/putData', (req, res) => {
     release_date,
     players,
     publisher,
+    box_art,
   } = req.body;
 
   if ((!id && id !== 0) || !name) {
@@ -96,7 +115,8 @@ router.post('/putData', (req, res) => {
   data.release_date = release_date;
   data.players = players;
   data.publisher = publisher;
-  
+  data.box_art = box_art;
+
   data.save((err) => {
     if (err) return res.json({
       success: false,

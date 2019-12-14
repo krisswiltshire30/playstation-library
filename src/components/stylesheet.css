@@ -72,11 +72,6 @@ html {
   list-style: none;
 }
 
-input {
-  width: 200px;
-  display: block;
-  box-sizing: border-box;
-}
 
 .form {
   position: center;
@@ -108,8 +103,23 @@ li {
 
 .popup-info {
   color: black;
-  font-size: 15px;
+  font-size: 20px;
+  border-style: solid;
   float: right;
+  width: 300px;
+  height: 235px;
+  padding: 20px;
+  border-radius: 5px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.box-art {
+  float: left;
+  /* border: black;
+  border-radius: 5px;
+  border-style: solid; */
+  width: 270px;
 }
 
 p {
@@ -118,5 +128,42 @@ p {
 
 span {
   margin: 0%;
-  padding: px;
+}
+
+input[type=text] {
+  width: 50%;
+  padding: 5px 10px;
+  margin: 8px 0;
+  font-family: 'Play', sans-serif;
+  font-size: medium;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: block;
+  box-sizing: border-box;
+  text-transform: uppercase;
+}
+
+.button {
+  width: 50%;
+  background-color: rgb(61, 112, 153);
+  color: white;
+  padding: 5px;
+  font-family: 'Play', sans-serif;
+  font-size: medium;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list-info {
+  color: grey;
+  position: center;
+}
+
+.modal {
+  height: fit-content;
+  padding: none;
+  border-radius: 20px;
+  position: relative;
 }

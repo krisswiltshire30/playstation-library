@@ -10,6 +10,7 @@ const DataSchema = new Schema(
     release_date: String,
     players: Number,
     publisher: String,
+    box_art: String,
   }
 );
 
