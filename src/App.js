@@ -84,6 +84,7 @@ class App extends Component {
       publisher: publisher,
       box_art: box_art,
     });
+    document.getElementById("updated").innerHTML = this.state.name + " added to library";
   };
 
   updateDB = (idToUpdate, name, platform, genre, release_date, players, publisher, box_art) => {
@@ -135,7 +136,7 @@ class App extends Component {
   render() {
     const { data } = this.state;
     return (
-      <div>
+      <div className='app'>
         <div>
           <img className='logo' src={require("./components/images/playstation-logo.png")} alt="ps-logo" />
           <span className='main-header'>Library</span>
@@ -143,7 +144,10 @@ class App extends Component {
         <hr />
         <div className='menu'>
           <Popup
-            trigger={<button className="menu-button"> Add Game </button>}
+            trigger={
+              <div className='menu-button-box'>
+                <button className="menu-button"> Add Game </button>
+              </div>}
             modal
             closeOnDocumentClick>
             <center>
@@ -179,8 +183,9 @@ class App extends Component {
                   placeholder="Publisher"
                   onChange={(e) => this.setState({ publisher: e.target.value })}
                 />
-                <span style={{ color: 'black' }}>Upload Image
-                <input type="file" onChange={this.handleUpload} />
+                <span style={{
+                  color: 'black', display: 'block'
+                }}>Upload Image<input type="file" onChange={this.handleUpload} />
                 </span>
                 <button className='button'
                   onClick={() => this.putDataToDB(this.state.name,
@@ -193,6 +198,7 @@ class App extends Component {
                     console.log(this.state)
                   )}>ADD GAME
                    </button>
+                <h4 id='updated' style={{ color: 'black' }}></h4>
               </div>
             </center>
           </Popup>
@@ -202,7 +208,7 @@ class App extends Component {
             {data.length <= 0
               ? 'Empty'
               : data.map((game) => (
-                <li key={data.id}>
+                <li className="game-list" key={data.id}>
                   <Popup
                     trigger={<button className="list-button"> {game.name} </button>}
                     modal
@@ -212,7 +218,7 @@ class App extends Component {
                         <span>Name: <span style={{ color: 'black' }}>{game.name}</span></span><br />
                         <span>Platform: <span style={{ color: 'black' }}>{game.platform}</span></span><br />
                         <span>Genre: <span style={{ color: 'black' }}>{game.genre}</span></span><br />
-                        <span>Release Date: <span style={{ color: 'black' }}>{moment(game.release_date, 'MM/DD/YYYY').format('MM/DD/YYYY')}</span></span><br />
+                        <span>Release Date: <span style={{ color: 'black' }}>{moment(game.release_date, 'DD/MM/YYYY').format('MM/DD/YYYY')}</span></span><br />
                         <span>No. of Players: <span style={{ color: 'black' }}>{game.players}</span></span><br />
                         <span>Publisher: <span style={{ color: 'black' }}>{game.publisher}</span></span><br />
                       </div>
@@ -262,7 +268,8 @@ class App extends Component {
                             this.state.players,
                             this.state.publisher,
                             this.state.box_art,
-                            console.log(this.state))}>
+                            console.log(this.state))
+                          }>
                             Update
                         </button>
                         </center>

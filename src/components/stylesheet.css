@@ -23,6 +23,12 @@ html {
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
+.app {
+  width: auto;
+  margin: auto;
+  display: inline-block;
+}
+
 .main-header {
   font-size: 40px;
   vertical-align: middle;
@@ -41,6 +47,7 @@ html {
   box-shadow: none !important;
 }
 
+
 .menu-button:hover {
   color: rgb(187, 179, 179);
 }
@@ -54,11 +61,11 @@ html {
   float: right;
   width: 1050px;
   height: 520px;
-  position: relative;
   border-left: thin solid white;
   -webkit-column-count: 3;
   -moz-column-count: 3;
   column-count: 3;
+  overflow: hidden
 }
 
 .main-box-balance {
@@ -70,6 +77,7 @@ html {
 
 .game-list {
   list-style: none;
+  text-transform: uppercase;
 }
 
 
@@ -84,6 +92,7 @@ li {
   cursor: pointer;
   padding: 10px;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .list-button {
@@ -107,7 +116,7 @@ li {
   border-style: solid;
   float: right;
   width: 300px;
-  height: 235px;
+  height: 190px;
   padding: 20px;
   border-radius: 5px;
   word-wrap: break-word;
