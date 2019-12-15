@@ -4,10 +4,10 @@ import Popup from "reactjs-popup";
 import moment from "moment";
 import S3FileUpload from 'react-s3';
 import './components/stylesheet.css';
-import dotenv from 'dotenv'
 
 const config = {
   bucketName: 'ps-box-art',
+  dirName: 'box-art',
   region: 'eu-west-2',
   accessKeyId: process.env.REACT_APP_AWS_KEY,
   secretAccessKey: process.env.REACT_APP_AWS_SECRET,
@@ -94,6 +94,7 @@ class App extends Component {
         objIdToUpdate = game._id;
       }
     });
+
     axios.post('http://localhost:3001/api/updateData', {
 
       id: objIdToUpdate,
@@ -117,13 +118,12 @@ class App extends Component {
     }
   }
 
-
-
   handleUpload = (e) => {
     console.log(e.target.files[0]);
     S3FileUpload.uploadFile(e.target.files[0], config)
       .then((data) => {
-        console.log(data)
+        console.log(data.location)
+        this.setState({ box_art: data.location })
       })
       .catch((err) => {
         console.log(err)
@@ -212,7 +212,7 @@ class App extends Component {
                         <span>Name: <span style={{ color: 'black' }}>{game.name}</span></span><br />
                         <span>Platform: <span style={{ color: 'black' }}>{game.platform}</span></span><br />
                         <span>Genre: <span style={{ color: 'black' }}>{game.genre}</span></span><br />
-                        <span>Release Date: <span style={{ color: 'black' }}>{moment(game.release_date).format('MM/DD/YYYY')}</span></span><br />
+                        <span>Release Date: <span style={{ color: 'black' }}>{moment(game.release_date, 'MM/DD/YYYY').format('MM/DD/YYYY')}</span></span><br />
                         <span>No. of Players: <span style={{ color: 'black' }}>{game.players}</span></span><br />
                         <span>Publisher: <span style={{ color: 'black' }}>{game.publisher}</span></span><br />
                       </div>
@@ -253,10 +253,7 @@ class App extends Component {
                             onChange={(e) => this.handleChange('publisher', e)}
                           />
                           <span style={{ color: 'black' }}>Upload Image
-                        <input
-                              type="file"
-                              name="file"
-                              onChange={this.fileSelectedHandler} />
+                            <input type="file" onChange={this.handleUpload} />
                           </span>
                           <button onClick={() => this.updateDB(game.id, this.state.name,
                             this.state.platform,
@@ -275,7 +272,7 @@ class App extends Component {
                       </button>
                     </div>
                     <div className='box-art'>
-                      <img src="https://cdn1-www.gamerevolution.com/assets/uploads/2018/01/God-of-War-Box.jpg" alt="sdas" width='270' />
+                      <img src={game.box_art} alt="box_art" width='270' />
                     </div>
                   </Popup>
                 </li>
