@@ -38,7 +38,7 @@ I started by splitting the spec into users stories and running through them in o
 
 For the front end I used React as I have been teaching myself for the past month. As I wanted the app to work like a SPA I decided to utilise the [PopUp module](https://www.npmjs.com/package/reactjs-popup) to serve the forms. I feel like this works well and makes for a very clean UX.
 
-Using Express to serve the app and Mongodb to hold the data worked well. I used an AWS bucket to host the images, when the user uploads the file to the bucket, the url of the image is saved in Mongo and then called when showing the image for the respective games id.
+Using Express to serve the app, Mongodb to hold the data, and axios to handle requests worked well. I used an AWS bucket to host the images, when the user uploads the file to the bucket, the url of the image is saved in Mongo and then called when showing the image for the respective games id.
 
 Although it was not in the spec, I decided implement update and delete functions in order to keep the app RESTful.
 
@@ -48,6 +48,24 @@ I learnt a lot whilst undertaking this task, for instance, I learnt how to work 
 I think if I had more time to work on this project I would clean it up considerably by extracting a lot of the functions and forms into seperate components so it is a lot easier to read. 
 
 Though it was not part of the spec I would add a user login feature. I would also add sorting and search functionality to sort through the list of games via their game content.
+### Design
+
+![design](./src/components/images/design.png)
+
+### App preview
+##### Library
+![design](./src/components/images/library.png)
+##### Add Game
+![design](./src/components/images/add_game.png)
+##### View game
+![design](./src/components/images/view_game.png)
+##### Update game
+![design](./src/components/images/edit.png)
+
+
+
+
+
 ### User stories
 
 ```
