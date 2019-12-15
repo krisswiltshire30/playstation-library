@@ -1,12 +1,23 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Popup from "reactjs-popup";
+import moment from "moment";
+import S3FileUpload from 'react-s3';
 import './components/stylesheet.css';
-import moment from "moment"
+import dotenv from 'dotenv'
+
+const config = {
+  bucketName: 'ps-box-art',
+  region: 'eu-west-2',
+  accessKeyId: process.env.REACT_APP_AWS_KEY,
+  secretAccessKey: process.env.REACT_APP_AWS_SECRET,
+}
 
 class App extends Component {
   state = {
     data: [],
+    files: [],
+    file: null,
     id: 0,
     name: null,
     platform: null,
@@ -45,12 +56,11 @@ class App extends Component {
   deleteFromDB = (idTodelete) => {
     parseInt(idTodelete);
     let objIdToDelete = null;
-    this.state.data.forEach((dat) => {
-      if (dat.id == idTodelete) {
-        objIdToDelete = dat._id;
+    this.state.data.forEach((game) => {
+      if (game.id === idTodelete) {
+        objIdToDelete = game._id;
       }
     });
-
     axios.delete('http://localhost:3001/api/deleteData', {
       data: {
         id: objIdToDelete,
@@ -64,7 +74,6 @@ class App extends Component {
     while (currentIds.includes(idToBeAdded)) {
       ++idToBeAdded;
     }
-
     axios.post('http://localhost:3001/api/putData', {
       id: idToBeAdded,
       name: name,
@@ -80,9 +89,9 @@ class App extends Component {
   updateDB = (idToUpdate, name, platform, genre, release_date, players, publisher, box_art) => {
     let objIdToUpdate = null;
     parseInt(idToUpdate);
-    this.state.data.forEach((dat) => {
-      if (dat.id == idToUpdate) {
-        objIdToUpdate = dat._id;
+    this.state.data.forEach((game) => {
+      if (game.id === idToUpdate) {
+        objIdToUpdate = game._id;
       }
     });
     axios.post('http://localhost:3001/api/updateData', {
@@ -100,21 +109,28 @@ class App extends Component {
     });
   };
 
-  fileSelectedHandler = event => {
-    this.setState({
-      box_art: event.target.files[0]
-    })
-  }
-
-  fileUploadHandler = () => {
-
-  }
-
   handleChange = (statename, event) => {
-    if (event.target.value) {
+    if (event.target.value !== event) {
       this.setState({ [statename]: event.target.value })
+    } else {
+      this.setState({ [statename]: null })
     }
   }
+
+
+
+  handleUpload = (e) => {
+    console.log(e.target.files[0]);
+    S3FileUpload.uploadFile(e.target.files[0], config)
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+  }
+
 
   render() {
     const { data } = this.state;
@@ -164,10 +180,7 @@ class App extends Component {
                   onChange={(e) => this.setState({ publisher: e.target.value })}
                 />
                 <span style={{ color: 'black' }}>Upload Image
-                <input
-                    type="file"
-                    name="file"
-                    onChange={this.fileSelectedHandler} />
+                <input type="file" onChange={this.handleUpload} />
                 </span>
                 <button className='button'
                   onClick={() => this.putDataToDB(this.state.name,
@@ -188,27 +201,27 @@ class App extends Component {
           <ul className="game-list">
             {data.length <= 0
               ? 'Empty'
-              : data.map((dat) => (
+              : data.map((game) => (
                 <li key={data.id}>
                   <Popup
-                    trigger={<button className="list-button"> {dat.name} </button>}
+                    trigger={<button className="list-button"> {game.name} </button>}
                     modal
                     closeOnDocumentClick>
                     <div className='popup-info'>
                       <div className='list-info'>
-                        <span>Name: <span style={{ color: 'black' }}>{dat.name}</span></span><br />
-                        <span>Platform: <span style={{ color: 'black' }}>{dat.platform}</span></span><br />
-                        <span>Genre: <span style={{ color: 'black' }}>{dat.genre}</span></span><br />
-                        <span>Release Date: <span style={{ color: 'black' }}>{moment(dat.release_date).format('MM/DD/YYYY')}</span></span><br />
-                        <span>No. of Players: <span style={{ color: 'black' }}>{dat.players}</span></span><br />
-                        <span>Publisher: <span style={{ color: 'black' }}>{dat.publisher}</span></span><br />
+                        <span>Name: <span style={{ color: 'black' }}>{game.name}</span></span><br />
+                        <span>Platform: <span style={{ color: 'black' }}>{game.platform}</span></span><br />
+                        <span>Genre: <span style={{ color: 'black' }}>{game.genre}</span></span><br />
+                        <span>Release Date: <span style={{ color: 'black' }}>{moment(game.release_date).format('MM/DD/YYYY')}</span></span><br />
+                        <span>No. of Players: <span style={{ color: 'black' }}>{game.players}</span></span><br />
+                        <span>Publisher: <span style={{ color: 'black' }}>{game.publisher}</span></span><br />
                       </div>
                       <Popup
                         trigger={<button className='button'> Edit </button>}
                         modal
                         closeOnDocumentClick>
                         <center>
-                          Editing {dat.name}
+                          Editing {game.name}
                           <input
                             type="text"
                             placeholder="Name"
@@ -217,12 +230,12 @@ class App extends Component {
                           <input
                             type="text"
                             placeholder="Platform"
-                            onChange={(e) => this.handleChange('Platform', e)}
+                            onChange={(e) => this.handleChange('platform', e)}
                           />
                           <input
                             type="text"
                             placeholder="Genre"
-                            onChange={(e) => this.handleChange('Genre', e)}
+                            onChange={(e) => this.handleChange('genre', e)}
                           />
                           <input
                             type="text"
@@ -245,7 +258,7 @@ class App extends Component {
                               name="file"
                               onChange={this.fileSelectedHandler} />
                           </span>
-                          <button onclick onClick={() => this.updateDB(dat.id, this.state.name,
+                          <button onClick={() => this.updateDB(game.id, this.state.name,
                             this.state.platform,
                             this.state.genre,
                             this.state.release_date,
@@ -257,7 +270,7 @@ class App extends Component {
                         </button>
                         </center>
                       </Popup>
-                      <button className='button' onClick={() => this.deleteFromDB(dat.id)}>
+                      <button className='button' onClick={() => this.deleteFromDB(game.id)}>
                         Delete
                       </button>
                     </div>

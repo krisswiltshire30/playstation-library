@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
 const multer = require('multer');
-const path = require('path');
 const API_PORT = 3001;
 const app = express();
 app.use(cors());
@@ -18,23 +17,6 @@ mongoose.connect(dbRoute, {
   useNewUrlParser: true
 });
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, callback) => {
-      try {
-        let path = "http://localhost:3001/";
-        fs.mkdirsSync(path);
-        callback(null, path);
-      } catch (e) {
-        callback(jsonError(e), null)
-      }
-    },
-    filename: (req, file, callback) => {
-      //original name is the uploaded file's name with ext
-      callback(null, mongoose.Types.ObjectId() + path.extname(file.originalname));
-    }
-  })
-});
 let db = mongoose.connection;
 
 db.once('open', () => console.log('connected to the database'));
@@ -127,7 +109,6 @@ router.post('/putData', (req, res) => {
     });
   });
 });
-
 app.use('/api', router);
 
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
