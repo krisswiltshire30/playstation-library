@@ -1,7 +1,7 @@
 ## Playstation Library
 
 ### Description
-A RESTful API to keep track of your Playstation game library, using a MERN stack. 
+A web app to keep track of your Playstation game library, using a MERN stack. 
 ### How to run
 
 ##### Requirements
@@ -45,7 +45,7 @@ Although it was not in the spec, I decided implement update and delete functions
 ### Reflection
 I learnt a lot whilst undertaking this task, for instance, I learnt how to work with state in a react, I learnt how to deal with CORS errors when sending packages to AWS by using a proxy, and also learnt how to use Mongodb.
 
-I think if I had more time to work on this project I would clean it up considerably by extracting a lot of the functions and forms into seperate components so it is a lot easier to read. 
+I think if I had more time to work on this project I would clean it up considerably by extracting a lot of the functions and forms into seperate components.
 
 Though it was not part of the spec I would add a user login feature. I would also add sorting and search functionality to sort through the list of games via their game content.
 ### Design
